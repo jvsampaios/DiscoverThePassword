@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Jogo de Adivinhação de Senha</title>
+</head>
+<body>
+  <h1>Jogo de Adivinhação de Senha</h1>
+  <p>Tente adivinhar a senha:</p>
+  <input id="guessInput" type="text" />
+  <button id="guessButton" disabled>Enviar Palpite</button>
+  <button id="giveUpButton">Desistir</button>
+  <div id="hints"></div>
+
+  <script src="/socket.io/socket.io.js"></script>
+  <script>
+    // Conecte-se ao servidor Socket.io
+    const socket = io();
+
+    // Manipule a habilitação do botão de envio
+   const guessInput = document.getElementById('guessInput');
+    const guessButton = document.getElementById('guessButton');
+    const hintsDiv = document.getElementById('hints');
+    
+    guessInput.addEventListener('input', () => {
+      guessButton.disabled = !guessInput.value;
+    });
+
+    guessButton.addEventListener('click', () => {
+      const guess = guessInput.value;
+      socket.emit('guess', guess);
+      guessInput.value = '';
+    });
+
+    const giveUpButton = document.getElementById('giveUpButton');
+    giveUpButton.addEventListener('click', () => {
+      socket.emit('giveUp');
+    });
+   
+
+    // Manipule a resposta do servidor
+    socket.on('hint', (hint) => {
+      const hintElement = document.createElement('p');
+      hintElement.textContent = hint;
+      hintsDiv.appendChild(hintElement);
+    });
+
+    socket.on('showPassword', (password) => {
+      const passwordElement = document.createElement('p');
+      passwordElement.textContent = `Senha correta: ${password}`;
+      hintsDiv.appendChild(passwordElement);
+    });
+
+    socket.on('giveUpMessage', (message) => {
+      console.log(message);
+    });
+  </script>
+</body>
+</html>

@@ -22,14 +22,16 @@ function generatePassword() {
     const year = Math.floor(Math.random() * (2022 - 1900 + 1)) + 1900;
     const month = months[Math.floor(Math.random() * months.length)];
 
+    const specialCharIndex = Math.floor(Math.random() * newPassword.length);
+    newPassword = newPassword.substring(0, specialCharIndex) + characters[Math.floor(Math.random() * characters.length)] + newPassword.substring(specialCharIndex);
+
     const yearIndex = Math.floor(Math.random() * (newPassword.length - 1)) + 1;
     newPassword = newPassword.substring(0, yearIndex) + year + newPassword.substring(yearIndex);
 
     const monthIndex = Math.floor(Math.random() * (newPassword.length - 1)) + 1;
     newPassword = newPassword.substring(0, monthIndex) + month + newPassword.substring(monthIndex);
 
-    const specialCharIndex = Math.floor(Math.random() * newPassword.length);
-    newPassword = newPassword.substring(0, specialCharIndex) + characters[Math.floor(Math.random() * characters.length)] + newPassword.substring(specialCharIndex);
+    
   }
 
   return newPassword;
@@ -50,13 +52,15 @@ io.on('connection', (socket) => {
     } else {
       const hints = [];
 
-      hints.push(`Forma um ano que já passou a partir da posição ${password.indexOf(guess.substring(0, 2))}`);
-      hints.push(`Um mês do ano é formado a partir da posição ${password.indexOf(guess.substring(2, 5))}`);
       hints.push(`Número de caracteres: ${password.length}`);
+      hints.push(`Um ano que já passou é formado em algum momento da senha.`);
       hints.push(`Tem ${password.match(/[A-Z]/g).length} letras maiúsculas`);
-      hints.push(`Tem ${password.match(/[a-z]/g).length} letras minúsculas`);
-      hints.push(`Tem ${password.match(/[^A-Za-z0-9]/g)?.length || 0} algarismos especiais`);
+      hints.push(`Um mês do ano é formado em algum momento da senha.`);     
       hints.push(`A soma dos dígitos numéricos é igual a ${sumDigits(password)}`);
+      hints.push(`A senha inicia com ${password[0]}`);
+      hints.push(`A senha termina com ${password[password.length - 1]}`);
+      hints.push(`A senha tem ${password.match(/[^A-Za-z0-9]/g)?.length || 0} algarismos especiais`);
+      hints.push(`A senha tem ${password.match(/[0-9]/g)?.length || 0} dígitos numéricos`);
 
       hints.forEach((hint) => {
         socket.emit('hint', hint);

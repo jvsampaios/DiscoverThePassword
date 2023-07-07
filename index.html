@@ -40,6 +40,13 @@ socket.on('hint', (hint) => {
   hintsDiv.appendChild(hintElement);
 });
 
+// Desistir
+
+const giveUpButton = document.getElementById('giveUpButton');
+    giveUpButton.addEventListener('click', () => {
+      socket.emit('giveUp');
+    });
+
 socket.on('showPassword', (password) => {
   const passwordElement = document.createElement('p');
   passwordElement.textContent = `Senha correta: ${password}`;
@@ -50,10 +57,7 @@ socket.on('giveUpMessage', (message) => {
   console.log(message);
 });
 
-// Limpe as dicas ao enviar um novo palpite
-guessButton.addEventListener('click', () => {
-  hintsDiv.innerHTML = '';
-});
+
   </script>
 </body>
 </html>

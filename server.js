@@ -5,6 +5,7 @@ const io = require('socket.io')(server);
 
 const port = 3000;
 let password = '';
+let hints = [];
 
 function generatePassword() {
   const characters = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789!@#$%^&*()-_+=';
@@ -30,8 +31,6 @@ function generatePassword() {
 
     const monthIndex = Math.floor(Math.random() * (newPassword.length - 1)) + 1;
     newPassword = newPassword.substring(0, monthIndex) + month + newPassword.substring(monthIndex);
-
-    
   }
 
   return newPassword;
@@ -40,6 +39,17 @@ function generatePassword() {
 function startGame() {
   password = generatePassword();
   console.log('Senha gerada:', password);
+  hints = [
+    `Número de caracteres: ${password.length}`,
+    `Um ano que já passou é formado em algum momento da senha.`,
+    `Tem ${password.match(/[A-Z]/g).length} letras maiúsculas`,
+    `Um mês do ano é formado em algum momento da senha.`,
+    `A soma dos dígitos numéricos é igual a ${sumDigits(password)}`,
+    `A senha inicia com ${password[0]}`,
+    `A senha termina com ${password[password.length - 1]}`,
+    `A senha tem ${password.match(/[^A-Za-z0-9]/g)?.length || 0} algarismos especiais`,
+    `A senha tem ${password.match(/[0-9]/g)?.length || 0} dígitos numéricos`
+  ];
 }
 
 io.on('connection', (socket) => {
@@ -50,21 +60,12 @@ io.on('connection', (socket) => {
       socket.emit('hint', 'Parabéns! Você acertou a senha!');
       startGame();
     } else {
-      const hints = [];
-
-      hints.push(`Número de caracteres: ${password.length}`);
-      hints.push(`Um ano que já passou é formado em algum momento da senha.`);
-      hints.push(`Tem ${password.match(/[A-Z]/g).length} letras maiúsculas`);
-      hints.push(`Um mês do ano é formado em algum momento da senha.`);     
-      hints.push(`A soma dos dígitos numéricos é igual a ${sumDigits(password)}`);
-      hints.push(`A senha inicia com ${password[0]}`);
-      hints.push(`A senha termina com ${password[password.length - 1]}`);
-      hints.push(`A senha tem ${password.match(/[^A-Za-z0-9]/g)?.length || 0} algarismos especiais`);
-      hints.push(`A senha tem ${password.match(/[0-9]/g)?.length || 0} dígitos numéricos`);
-
-      hints.forEach((hint) => {
+      if (hints.length > 0) {
+        const hint = hints.shift(); // Remove a primeira dica do array
         socket.emit('hint', hint);
-      });
+      } else {
+        socket.emit('hint', 'Sem mais dicas disponíveis.');
+      }
     }
   });
 
@@ -73,6 +74,7 @@ io.on('connection', (socket) => {
     startGame();
     console.log('Ih, ele desistiu');
     io.emit('giveUpMessage', 'Ih, ele desistiu');
+    hints = []; // Redefine o array de dicas
   });
 });
 

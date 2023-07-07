@@ -13,46 +13,47 @@
 
   <script src="/socket.io/socket.io.js"></script>
   <script>
-    // Conecte-se ao servidor Socket.io
-    const socket = io();
+   // Conecte-se ao servidor Socket.io
+const socket = io();
 
-    // Manipule a habilitação do botão de envio
-   const guessInput = document.getElementById('guessInput');
-    const guessButton = document.getElementById('guessButton');
-    const hintsDiv = document.getElementById('hints');
-    
-    guessInput.addEventListener('input', () => {
-      guessButton.disabled = !guessInput.value;
-    });
+// Obtenha as referências dos elementos HTML
+const guessInput = document.getElementById('guessInput');
+const guessButton = document.getElementById('guessButton');
+const hintsDiv = document.getElementById('hints');
 
-    guessButton.addEventListener('click', () => {
-      const guess = guessInput.value;
-      socket.emit('guess', guess);
-      guessInput.value = '';
-    });
+// Manipule a habilitação do botão de envio
+guessInput.addEventListener('input', () => {
+  guessButton.disabled = !guessInput.value;
+});
 
-    const giveUpButton = document.getElementById('giveUpButton');
-    giveUpButton.addEventListener('click', () => {
-      socket.emit('giveUp');
-    });
-   
+// Manipule o envio do palpite
+guessButton.addEventListener('click', () => {
+  const guess = guessInput.value;
+  socket.emit('guess', guess);
+  guessInput.value = '';
+});
 
-    // Manipule a resposta do servidor
-    socket.on('hint', (hint) => {
-      const hintElement = document.createElement('p');
-      hintElement.textContent = hint;
-      hintsDiv.appendChild(hintElement);
-    });
+// Manipule a resposta do servidor
+socket.on('hint', (hint) => {
+  const hintElement = document.createElement('p');
+  hintElement.textContent = hint;
+  hintsDiv.appendChild(hintElement);
+});
 
-    socket.on('showPassword', (password) => {
-      const passwordElement = document.createElement('p');
-      passwordElement.textContent = `Senha correta: ${password}`;
-      hintsDiv.appendChild(passwordElement);
-    });
+socket.on('showPassword', (password) => {
+  const passwordElement = document.createElement('p');
+  passwordElement.textContent = `Senha correta: ${password}`;
+  hintsDiv.appendChild(passwordElement);
+});
 
-    socket.on('giveUpMessage', (message) => {
-      console.log(message);
-    });
+socket.on('giveUpMessage', (message) => {
+  console.log(message);
+});
+
+// Limpe as dicas ao enviar um novo palpite
+guessButton.addEventListener('click', () => {
+  hintsDiv.innerHTML = '';
+});
   </script>
 </body>
 </html>

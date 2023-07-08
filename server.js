@@ -44,11 +44,20 @@ function startGame() {
     `Um ano que já passou é formado em algum momento da senha.`,
     `Tem ${password.match(/[A-Z]/g).length} letras maiúsculas`,
     `Um mês do ano é formado em algum momento da senha.`,
+    `Opa, esqueci de dizer que o mês do ano está em Inglês. Mas você é poliglota, não é?`,
     `A soma dos dígitos numéricos é igual a ${sumDigits(password)}`,
     `A senha inicia com ${password[0]}`,
+    `Olha lá as senhas que você já tentou`,
     `A senha termina com ${password[password.length - 1]}`,
     `A senha tem ${password.match(/[^A-Za-z0-9]/g)?.length || 0} algarismos especiais`,
-    `A senha tem ${password.match(/[0-9]/g)?.length || 0} dígitos numéricos`
+    `A senha tem ${password.match(/[0-9]/g)?.length || 0} dígitos numéricos`,
+    `A senha tem ${password.match(/[A-Z]/g)?.length || 0} letras maiúsculas`,
+    `Eu já tinha dito essa, né?`,
+    `A senha tem ${password.match(/[^A-Za-z0-9]/g)?.length || 0} caracteres especiais`,
+    `Calmaaa, minhas dicas tão acabando`,
+    `A senha tem ${password.match(/[a-z]/g)?.length || 0} letras minúsculas`,
+    `A senha tem ${password.match(/[A-Za-z]/g)?.length || 0} letras`,
+    `A senha tem ${password.match(/[0-9]/g)?.length || 0} números`
   ];
 }
 

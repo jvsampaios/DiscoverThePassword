@@ -60,4 +60,60 @@ socket.on('giveUpMessage', (message) => {
 
   </script>
 </body>
+<style>
+      body {
+      background-color: beige;
+      font-family: Arial, sans-serif;
+      color: #333;
+      margin: 0;
+      padding: 0;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      min-height: 100vh;
+      text-align: center;
+    }
+
+    h1 {
+      color: #006400;
+      font-size: 28px;
+      margin-bottom: 20px;
+    }
+
+    p {
+      color: #008000;
+      font-size: 18px;
+      margin-bottom: 10px;
+    }
+
+    input[type="text"] {
+      padding: 10px;
+      font-size: 16px;
+    }
+
+    button {
+      padding: 10px 20px;
+      font-size: 16px;
+      background-color: #008000;
+      color: white;
+      border: none;
+      cursor: pointer;
+      margin-top: 10px;
+    }
+
+    button:disabled {
+      background-color: #ccc;
+      cursor: not-allowed;
+    }
+
+    #hints {
+      margin-top: 20px;
+      text-align: left;
+    }
+
+    #hints p {
+      margin: 5px 0;
+    }
+</style>
 </html>

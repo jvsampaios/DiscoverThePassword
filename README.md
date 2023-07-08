@@ -9,6 +9,15 @@ Este projeto foi desenvolvido como parte de um trabalho da disciplina de Linguag
 
 A aplicação consiste em um jogo de adivinhação de senha aleatória, em que o cliente envia palpites para o servidor e o servidor fornece dicas sobre a senha. O cliente pode desistir a qualquer momento, e o servidor revela a senha correta. O jogo é implementado usando JavaScript com a biblioteca Socket.IO para a comunicação cliente-servidor.
 
+## Tecnologias Usadas
+
+- Node.js: Plataforma de desenvolvimento para construir aplicações em JavaScript no lado do servidor.
+- JavaScript: Linguagem de programação utilizada para desenvolver tanto o lado do cliente quanto o lado do servidor.
+- Express: Framework web rápido e minimalista para Node.js.
+- Socket.IO: Biblioteca JavaScript que permite comunicação em tempo real entre cliente e servidor por meio de websockets.
+- HTML: Linguagem de marcação usada para estruturar a página web do jogo.
+- CSS: Linguagem de estilização utilizada para definir a aparência visual da página web do jogo.
+
 ## Pré-requisitos
 
 - Node.js

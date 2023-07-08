@@ -31,7 +31,9 @@ A aplicação consiste em um jogo de adivinhação de senha aleatória, em que o
 
 2. Instale as dependências do projeto:
 
-<code>npm install</code>
+<code>npm init -y</code>
+
+<code>npm install express socket.io</code>
 
 3. Inicie o servidor
    

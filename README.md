@@ -27,7 +27,7 @@ A aplicação consiste em um jogo de adivinhação de senha aleatória, em que o
 
 1. Clone o repositório do GitHub:
 
-<code>git clone [https://github.com/jvsampaios/DiscoverPassword.git](https://github.com/jvsampaios/DiscoverPassword.git)</code>
+<code>git clone [https://github.com/jvsampaios/DiscoverThePassword.git](https://github.com/jvsampaios/DiscoverThePassword.git)</code>
 
 2. Instale as dependências do projeto:
 

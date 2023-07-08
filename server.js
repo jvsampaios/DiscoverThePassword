@@ -13,7 +13,7 @@ function generatePassword() {
 
   let newPassword = '';
 
-  while (newPassword.length < 8 || newPassword.length >= 30) {
+  while (newPassword.length < 8 || newPassword.length >= 15) {
     newPassword = '';
 
     for (let i = 0; i < 5; i++) {
@@ -47,7 +47,7 @@ function startGame() {
     `Opa, esqueci de dizer que o mês do ano está em Inglês. Mas você é poliglota, não é?`,
     `A soma dos dígitos numéricos é igual a ${sumDigits(password)}`,
     `A senha inicia com ${password[0]}`,
-    `Olha lá as senhas que você já tentou`,
+    `Relembra as senhas que você já tentou`,
     `A senha termina com ${password[password.length - 1]}`,
     `A senha tem ${password.match(/[^A-Za-z0-9]/g)?.length || 0} algarismos especiais`,
     `A senha tem ${password.match(/[0-9]/g)?.length || 0} dígitos numéricos`,

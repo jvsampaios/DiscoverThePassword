@@ -53,11 +53,13 @@ function startGame() {
     `A senha tem ${password.match(/[0-9]/g)?.length || 0} dígitos numéricos`,
     `A senha tem ${password.match(/[A-Z]/g)?.length || 0} letras maiúsculas`,
     `Eu já tinha dito essa, né?`,
-    `A senha tem ${password.match(/[^A-Za-z0-9]/g)?.length || 0} caracteres especiais`,
+    `O 2º caractere da senha é: ${password[1]}`,
     `Calmaaa, minhas dicas tão acabando`,
     `A senha tem ${password.match(/[a-z]/g)?.length || 0} letras minúsculas`,
     `A senha tem ${password.match(/[A-Za-z]/g)?.length || 0} letras`,
-    `A senha tem ${password.match(/[0-9]/g)?.length || 0} números`
+    `A senha tem ${password.match(/[0-9]/g)?.length || 0} números`,
+    `O 3º caractere da senha é: ${password[2]}`,
+    `O 4º caractere da senha é: ${password[3]}`
   ];
 }
 
@@ -80,10 +82,13 @@ io.on('connection', (socket) => {
 
   socket.on('giveUp', () => {
     socket.emit('showPassword', password);
-    startGame();
     console.log('Ih, ele desistiu');
     io.emit('giveUpMessage', 'Ih, ele desistiu');
     hints = []; // Redefine o array de dicas
+  });
+
+  socket.on('halfPassword', () => {
+    socket.emit('showHalfPassword', password);
   });
 });
 

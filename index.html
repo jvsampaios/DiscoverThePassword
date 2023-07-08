@@ -39,15 +39,12 @@ socket.on('hint', (hint) => {
 
 let isFirstGiveUp = true;
 
-// Referência ao botão "Mostrar metade da senha"
 const showHalfPasswordButton = document.getElementById('showHalfPasswordButton');
 
-// Função para atualizar a visibilidade do botão "Mostrar metade da senha"
 function updateShowHalfPasswordButtonVisibility() {
   showHalfPasswordButton.style.display = isFirstGiveUp ? 'none' : 'inline-block';
 }
 
-// Manipule o clique no botão de desistir
 giveUpButton.addEventListener('click', () => {
   const confirmation = confirm("Você tem certeza que quer realmente desistir? E se nós te dermos 50% da senha? Você vai tentar achar a outra metade?");
 
@@ -61,12 +58,7 @@ giveUpButton.addEventListener('click', () => {
   }
 });
 
-// Manipule o clique no botão de mostrar metade da senha
-showHalfPasswordButton.addEventListener('click', () => {
-  const halfLength = Math.ceil(password.length / 2);
-  const halfPassword = password.substring(0, halfLength);
-  alert(`Metade da senha: ${halfPassword}`);
-});
+
 
 function updateShowHalfPasswordButtonVisibility() {
   showHalfPasswordButton.style.display = isFirstGiveUp ? 'none' : 'inline-block';
@@ -74,8 +66,20 @@ function updateShowHalfPasswordButtonVisibility() {
 
 socket.on('showPassword', (password) => {
   const passwordElement = document.createElement('p');
-  passwordElement.textContent = `Senha correta: ${password}`;
-  hintsDiv.appendChild(passwordElement);
+  alert(`Senha correta: ${password}`);
+});
+
+
+showHalfPasswordButton.addEventListener('click', () => {
+  socket.emit('halfPassword');
+});
+
+socket.on('showHalfPassword', (password) => {
+  const halfPasswordElement = document.createElement('p');
+  const halfLength = Math.ceil(password.length / 2);
+  const halfPassword = password.substring(0, halfLength);
+  halfPasswordElement.textContent = `A Metade da senha é: ${halfPassword}`;
+  hintsDiv.appendChild(halfPasswordElement);
 });
 
 socket.on('giveUpMessage', (message) => {
